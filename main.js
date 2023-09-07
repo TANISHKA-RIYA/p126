@@ -5,7 +5,9 @@ leftwristY = 0;
 rightwristX = 0;
 rightwristY = 0;
 scoreleftwrist = 0;
-statusofsongs = "";
+statusofsongslw = "";
+scorerightwrist = 0;
+statusofsongsrw = "";
 
 function preload(){
     music1 = loadSound("music.mp3");
@@ -22,7 +24,7 @@ function setup(){
 function draw(){
     image(video,0,0,500,500);
 
-    statusofsongs = music1.isPlaying();
+    statusofsongslw = music1.isPlaying();
     fill(255,0,0);
     stroke(255,0,0);
 
@@ -31,10 +33,23 @@ function draw(){
         music2.stop();
     }
 
-    if (statusofsongs = "false"){
+    if (statusofsongslw = "false"){
         music1.play();
         document.getElementById("songname").innerHTML = "SONG NAME - PETER PAN SONG";
     }
+
+    statusofsongsrw = music2.isPlaying();
+
+    if (scorerightwrist > 0.2){
+        circle(rightwristX,rightwristY,20);
+        music1.stop();
+    }
+
+    if (statusofsongsrw = "false"){
+        music2.play();
+        document.getElementById("songname").innerHTML = "SONG NAME - HARRY POTTER THEME SONG";
+    }
+
 }
 function modelLoaded(){
     console.log("posenet is initialized");
@@ -53,5 +68,8 @@ function gotPoses(results){
 
        scoreleftwrist = results[0].pose.leftWrist.confidence;
        console.log(scoreleftwrist);
+
+       scorerightwrist = results[0].pose.rightWrist.confidence;
+       console.log(scorerightwrist);
   }
 }
